@@ -1,4 +1,5 @@
 # main.py
+import os
 import torch
 from accelerate import Accelerator
 import wandb
@@ -12,14 +13,15 @@ from config import CONFIG
 
 # Initialize WandB
 
-wandb.login(key="4479360fe28288a4508a4ee8b76be303493e3ab1") 
+wandb.login() 
 wandb.init(project=CONFIG["project_name"], config=CONFIG)
 config = wandb.config
 
 # Data paths
-ORIGINAL_DIR = '/home/fisher/fisher/Peoples/hseung/카네기/LSMA/Project/ReIDataset/Market-1501/bounding_box_train'
-MASK_DIR = '/home/fisher/fisher/Peoples/hseung/카네기/LSMA/Project/LSMA_trial/new_one/sam2_masks'
-INPAINTED_DIR = '/home/fisher/fisher/Peoples/hseung/카네기/LSMA/Project/LSMA_trial/new_one/aug_sam2_resize_normalize'
+BASE_DATA_DIR = 'REID_scratch'
+ORIGINAL_DIR = os.path.join(BASE_DATA_DIR, 'Market-1501/bounding_box_train')
+MASK_DIR = os.path.join(BASE_DATA_DIR, 'LSMA_trial/new_one/sam2_masks')
+INPAINTED_DIR = os.path.join(BASE_DATA_DIR, 'LSMA_trial/new_one/aug_sam2_resize_normalize')
 
 # Data loaders
 datamanager = CustomDataManager(ORIGINAL_DIR, MASK_DIR, INPAINTED_DIR,
